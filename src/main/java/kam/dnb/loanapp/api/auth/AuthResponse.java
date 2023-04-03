@@ -22,6 +22,10 @@ public class AuthResponse {
     // Exercise note: To keep the frontend simple, users can only have a single role. It makes sense for users to only
     // have a single role, but I avoided enforcing that in the rest of the Java code except here to keep the UI simple.
     private String extractRole(final Collection<? extends GrantedAuthority> authorities) {
+        if (authorities == null) {
+            return "";
+        }
+
         // Extract only the roles from the list of authorities and remove the ROLE_ prefix
         return authorities.stream()
                 .filter(authority -> authority.getAuthority().startsWith(Role.AUTHORITY_ROLE_PREFIX))

@@ -29,7 +29,7 @@ public class CustomerService {
     // Exercise note: Would have liked to add in significantly more validation (email format, password requirements, etc.)
     // and add in the classes necessary to pass back multiple validation failures but skipping in the interest of time
     @Transactional
-    public void createCustomer(final CreateCustomerRequest createCustomerRequest) {
+    public CustomerResponse createCustomer(final CreateCustomerRequest createCustomerRequest) {
         if (userService.usernameExists(createCustomerRequest.username())) {
             throw new RequestException(CustomerFailureReason.USERNAME_ALREADY_EXISTS);
         }
@@ -44,7 +44,7 @@ public class CustomerService {
                 .setFullName(createCustomerRequest.fullName())
                 .setAddress(createCustomerRequest.address())
                 .setSocialSecurityNumber(createCustomerRequest.socialSecurity());
-        customerRepository.save(newCustomer);
+        return new CustomerResponse(customerRepository.save(newCustomer));
     }
 
     public CustomerResponse getById(final Long customerId) {

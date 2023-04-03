@@ -16,11 +16,9 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PreAuthorize("permitAll()")
     @PostMapping
-    public ResponseEntity<String> register(@RequestBody final CreateCustomerRequest createCustomerRequest) {
-        customerService.createCustomer(createCustomerRequest);
-        return ResponseEntity.ok("Success");
+    public ResponseEntity<CustomerResponse> register(@RequestBody final CreateCustomerRequest createCustomerRequest) {
+        return ResponseEntity.ok(customerService.createCustomer(createCustomerRequest));
     }
 
     @PreAuthorize("hasRole('ROLE_ADVISER')")
